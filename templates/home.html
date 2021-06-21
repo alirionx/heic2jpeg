@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Hallo Welt</h2>
+
+<div class="fileBox">
+  <div class="box">
+    <div class="hl">Uploaded</div>
+    {% for fl in uplFlAry %}
+      <div class="file">{{fl}}</div>
+    {% endfor %}  
+  </div>
+  <div class="box">
+    <div class="hl">Converted</div>
+  </div>
+</div>
+
+
+{% endblock %}

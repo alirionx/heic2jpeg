@@ -1,0 +1,22 @@
+<!doctype html>
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <title>Simple HEIC to JPG Converter - WebApp</title>
+</head>
+<body>
+  <div class="headBlock">
+    <div class="hlTxt">
+      Simple HEIC to JPG Converter - WebApp
+    </div>
+  </div>
+  <div id="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+  <div id="footer">
+    {% block footer %}
+    {% endblock %}
+  </div>
+</body>
+</html>

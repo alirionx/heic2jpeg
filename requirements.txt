@@ -1,0 +1,4 @@
+flask >= 2.0
+Pillow >= 8.0
+whatimage
+pyheif >= 0.5
