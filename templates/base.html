@@ -26,4 +26,22 @@
   function go_to(path){
     window.location.href = path; 
   }
+  
+  function call_loader(){
+    var blockerElm = document.createElement('DIV');
+    blockerElm.id = "blockerElm";
+    blockerElm.classList.add("blocker");
+    document.body.appendChild(blockerElm);
+
+    var loaderElm = document.createElement('DIV');
+    loaderElm.classList.add("loader");
+    blockerElm.appendChild(loaderElm);
+  }
+  function remove_loader(){
+    //setTimeout(function(){
+    var blockerElm = document.getElementById('blockerElm');
+    blockerElm.parentNode.removeChild(blockerElm);
+    //},1000)
+  }
+
 </script>

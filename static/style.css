@@ -32,10 +32,10 @@ body {
 
 .converterBox{
   display: table;
-  margin: 36px auto 12px auto;
-  min-width: 700px;
+  margin: 12px auto 12px auto;
+  min-width: 900px;
   width:80%;
-  padding:12px;
+  padding:1%;
   min-height:100px;
   text-align:center;
   border: 1px solid #444;
@@ -52,7 +52,7 @@ body {
   background-color: #f6f6f6;
   border: 1px solid #bbb;
   border-radius: 2px;
-  height: 55vh;
+  height: 50vh;
   overflow: auto;
   vertical-align: bottom;
 }
@@ -91,16 +91,17 @@ body {
   display: inline-block;
   width: 43%;
   padding: 1%;
-  margin: 0 2% 2% 2%;
+  margin: 0 2% 1% 2%;
   background-color: #f6f6f6;
   border: 1px solid #bbb;
   border-radius: 2px;
   vertical-align: bottom;
+  white-space: nowrap;
 }
 .converterBox .btnFrame button{
-  min-width: 120px;
+  min-width: 110px;
   padding:4px;
-  margin: 0 12px 0 12px;
+  margin: 0 10px 0 10px;
   background-color: #555;
   color: #fff;
   font-weight: 700;
@@ -110,6 +111,50 @@ body {
 .converterBox .btnFrame button:hover{
   background-color: #222;
 }
+
+.converterBox .optIcon{
+  padding:2px;
+  height: 30px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.converterBox .optIcon:hover{
+  border-bottom: 2px solid #444;
+}
+
+.converterBox .optFrame{
+  margin:0 auto 1% auto;
+  width: 92.5%;
+  padding: 1%;
+  background-color: #f6f6f6;
+  border: 1px solid #bbb;
+  border-radius: 2px;
+  text-align: center;
+  display: none;
+}
+.converterBox .optFrame table{
+  margin: auto;
+}
+.converterBox .optFrame table th{
+  font-weight: 700;
+  padding:4px 24px 4px 12px;
+  background-color: #666;
+  color: #fff;
+  font-size: 13px;
+  min-width: 140px;
+  text-align: right;
+}
+.converterBox .optFrame table td{
+  min-width: 120px;
+  text-align: left;
+  padding:0 12px 0 12px;
+}
+.converterBox .optFrame select{
+  padding:4px;
+  min-width: 100px;
+  border: 1px solid #666;
+}
+
 
 
 .uploadBox{
@@ -169,6 +214,8 @@ body {
 .uploadBox .btnFrame button:hover{
   background-color: #222;
 }
+
+
 
 
 
