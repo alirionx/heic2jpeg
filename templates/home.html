@@ -1,19 +1,160 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Hallo Welt</h2>
 
-<div class="fileBox">
-  <div class="box">
+<div class="converterBox">
+  
+  <div class="fileBox" id="uploadBox">
     <div class="hl">Uploaded</div>
+    {% if uplFlAry|length > 0 %}
+      <div class="allBar">
+        <input type="checkbox" id="chk_all_upl" onchange="switch_check_all(this, 'uploadBox')"/>
+        <label for="chk_all_upl">select all</label>
+      </div>
+    {% endif %}
     {% for fl in uplFlAry %}
-      <div class="file">{{fl}}</div>
+      <div class="fileBar">
+        <input type="checkbox" name="{{fl}}" id="{{fl}}" />
+        <label for="{{fl}}">{{fl}}</label>
+      </div>
     {% endfor %}  
   </div>
-  <div class="box">
+
+  <div class="fileBox" id="convertBox">
     <div class="hl">Converted</div>
+    {% if convertFlAry|length > 0 %}
+      <div class="allBar">
+        <input type="checkbox" id="chk_all_convert" onchange="switch_check_all(this, 'convertBox')"/>
+        <label for="chk_all_convert">select all</label>
+      </div>
+    {% endif %}
+    {% for fl in convertFlAry %}
+      <div class="fileBar">
+        <input type="checkbox" name="{{fl}}" id="{{fl}}" />
+        <label for="{{fl}}">{{fl}}</label>
+      </div>
+    {% endfor %}  
   </div>
+
+  <div class="btnFrame">
+    <button onclick="go_to('/upload')">Upload</button>
+    <button onclick="send_to_convert()">Convert</button>
+    <button onclick="send_delete('uploaded')">Delete</button>
+  </div>
+
+  <div class="btnFrame">
+    <button>Download</button>
+    <button onclick="send_delete('converted')">Delete</button>
+  </div>
+
 </div>
 
+
+
+<script>
+
+  function switch_check_all(elm, boxId){
+    var chkState = elm.checked;
+    var boxElm = document.getElementById(boxId);
+    var chkBoxAry = boxElm.getElementsByTagName('INPUT');
+    for (let i = 0; i < chkBoxAry.length; i++) {
+      chkBoxAry[i].checked = chkState;
+    } 
+  }
+
+  function send_to_convert(){
+    var boxElm = document.getElementById('uploadBox');
+    var chkBoxAry = boxElm.getElementsByTagName('INPUT');
+    var toConvertAry = []
+    for (let i = 0; i < chkBoxAry.length; i++) {
+      if(chkBoxAry[i].checked && chkBoxAry[i].name){
+        toConvertAry.push(chkBoxAry[i].id);
+      }
+    }
+    if(toConvertAry.length == 0){
+      alert("Please select one or more images");
+      return;
+    }
+
+    call_loader();
+
+    fetch('/api/convert', {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(toConvertAry),
+    })
+    .then(data => {
+      console.log('Success:', data);
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      remove_loader()
+    });
+  }
+
+
+  function send_delete(typ){
+    
+    var typMap = {
+      "uploaded": "uploadBox",
+      "converted": "convertBox"
+    } 
+    var boxId = typMap[typ];
+
+    var boxElm = document.getElementById(boxId);
+    var chkBoxAry = boxElm.getElementsByTagName('INPUT');
+    var toDeleteAry = []
+    for (let i = 0; i < chkBoxAry.length; i++) {
+      if(chkBoxAry[i].checked && chkBoxAry[i].name){
+        toDeleteAry.push(chkBoxAry[i].id);
+      }
+    }
+    if(toDeleteAry.length == 0){
+      alert("Please select one or more images");
+      return;
+    }
+
+    // console.log(typ, toDeleteAry)
+    call_loader();
+
+    fetch('/api/'+typ, {
+      method: 'DELETE', 
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(toDeleteAry),
+    })
+    .then(data => {
+      console.log('Success:', data);
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      remove_loader()
+    });
+  }
+
+
+  function call_loader(){
+    var blockerElm = document.createElement('DIV');
+    blockerElm.id = "blockerElm";
+    blockerElm.classList.add("blocker");
+    document.body.appendChild(blockerElm);
+
+    var loaderElm = document.createElement('DIV');
+    loaderElm.classList.add("loader");
+    blockerElm.appendChild(loaderElm);
+  }
+  function remove_loader(){
+    //setTimeout(function(){
+    var blockerElm = document.getElementById('blockerElm');
+    blockerElm.parentNode.removeChild(blockerElm);
+    //},1000)
+  }
+
+</script>
 
 {% endblock %}

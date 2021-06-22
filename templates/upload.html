@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% set txt='...click to select HEIC files...' %}
+
+<form method="POST" action="/api/upload" enctype = "multipart/form-data" >
+<div class="uploadBox">
+  <div class="hl">Upload HEIC Images</div>
+  
+  <div class="fileBox" id="fileSelectBox" onclick="call_file_ipt()">{{txt}}</div>
+  <input type="file" name="files" required multiple accept=".heic" id="fileSelectIpt" onchange="apply_selected_files()" />
+
+  <div class="btnFrame">
+    <button type="submit" >Submit</button>
+    <button type="button" onclick="go_to('/')">Cancel</button>
+  </div>
+
+</div>
+</form>
+
+<script>
+  function call_file_ipt(){
+    document.getElementById('fileSelectIpt').click();
+  }
+  function apply_selected_files(){
+    var fileBoxElm = document.getElementById('fileSelectBox');
+    fileBoxElm.innerHTML = '';
+    var fileIptElm = document.getElementById('fileSelectIpt');
+    
+    var fileList = fileIptElm.files;
+
+    if(fileList.length == 0){
+      fileBoxElm.innerHTML = "{{txt}}";
+      return;
+    }
+
+    for (let i = 0; i < fileList.length; i++) {
+      var newElm = document.createElement('DIV');
+      newElm.innerHTML = fileList[i].name;
+      fileBoxElm.appendChild(newElm);
+    }
+  }
+
+  function call_upload(){
+  
+  }
+
+
+</script>
+
+{% endblock %}
