@@ -141,7 +141,7 @@ def api_convert_post():
 
     try:
       convert_heic_to_jpg(srcPath=srcPath, tgtPath=tgtPath, quality=compressionIn)
-      os.remove(srcPath)
+      #os.remove(srcPath)
       resObj["jpegs"].append(flName)
     except Exception as e:
       print(e)
